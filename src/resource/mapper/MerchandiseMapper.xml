@@ -32,6 +32,9 @@
         <if test="hidquerylist != null and hidquerylist != -1">
             and s.hid= #{hidquerylist}
         </if>
+
+
+
         <if test="num != null and num !=0">
             and  num >0
 
