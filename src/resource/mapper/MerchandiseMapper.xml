@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.MovieDao" >
+
+    <!-- 查询总条数 -->
+    <select id="queryCount" resultType="java.lang.Long">
+        select count(*) from t_movie where 1=1
+
+        <if test="name!=null">
+            and name LIKE CONCAT(CONCAT('%',#{name},'%'))
+        </if>
+        <if test="hidquerylist != null and hidquerylist != -1">
+            and hid= #{hidquerylist}
+        </if>
+        <if test="num != null and num !=0">
+           and  num >0
+
+        </if>
+        <if test="num != null and num ==0">
+            and  num =0
+
+        </if>
+
+    </select>
+
+    <!-- 查询 -->
+    <select id="toList" parameterType="com.fh.model.QueryMovie" resultType="com.fh.model.Movie">
+             select * from t_movie s left join t_his b on s.hid=b.hid where 1=1
+        <if test="name!=null">
+            and name LIKE CONCAT(CONCAT('%',#{name},'%'))
+        </if>
+        <if test="hidquerylist != null and hidquerylist != -1">
+            and s.hid= #{hidquerylist}
+        </if>
+        <if test="num != null and num !=0">
+            and  num >0
+
+        </if>
+        <if test="num != null and num ==0">
+            and  num =0
+        </if>
+
+        limit ${start},${length};
+    </select>
+
+    
+</mapper>
